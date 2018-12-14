@@ -17,8 +17,13 @@ namespace WebServicesQLTXM
     public class QLTXM : System.Web.Services.WebService
     {
         QLTXMDataContext db = new QLTXMDataContext();
+        // loại xe
+        [WebMethod]
+        public List<LOAIXE> DanhSachThue()
+        {
+            return db.LOAIXEs.ToList();
+        }
 
-       
         // Xử lí thuê xe
         // danh sách hợp đồng thuê xe
         [WebMethod]
