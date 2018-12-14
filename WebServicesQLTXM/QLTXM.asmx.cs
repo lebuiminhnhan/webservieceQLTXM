@@ -16,14 +16,103 @@ namespace WebServicesQLTXM
     // [System.Web.Script.Services.ScriptService]
     public class QLTXM : System.Web.Services.WebService
     {
+
         QLTXMDataContext db = new QLTXMDataContext();
-        // loại xe
+        // Đăng nhập
         [WebMethod]
-        public List<LOAIXE> DanhSachThue()
+        public void DangNhapGG(string mail)
+        {
+            var l = db.User_Users.Where(u => u.Email == mail).Select(x => x.IdRole).First();
+            var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
+            var n = db.User_Users.Where(u => u.Email == mail).Select(x => x.UserName).First();
+            Session["name"] = n;
+            Session["role"] = j;
+        }
+        // Đăng nhập TT
+        [WebMethod]
+        public bool DangNhapTT(string name, string pass)
+        {
+            if (db.User_Users.Where(x => name == x.UserName && x.Password == mahoa(pass)).First() != null)
+            {
+                var l = db.User_Users.Where(u => u.UserName == name).Select(x => x.IdRole).First();
+                var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
+                var n = db.User_Users.Where(u => u.UserName == name).Select(x => x.UserName).First();
+                Session["name"] = n;
+                Session["role"] = j;
+                if ((string)Session["role"] == "Admin")
+                {
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        // Đăng kí
+        // Đăng kí Google
+        [WebMethod]
+        public void DangKiGG(string name, string mail, string id)
+        {
+
+            User_User u = new User_User();
+            u.Id = id;
+            u.UserName = name;
+            u.Email = mail;
+            u.IdRole = 2;
+            db.User_Users.InsertOnSubmit(u);
+            db.SubmitChanges();
+
+
+        }
+        Random ran = new Random();
+        // Đăng kí thông thường
+        [WebMethod]
+        public void DangKiTT(string name, string mail, string password, string id)
+        {
+            User_User u = new User_User();
+            u.Id = id;
+            u.UserName = name;
+            u.Email = mail;
+            u.Password = mahoa(password);
+            u.IdRole = 2;
+            db.User_Users.InsertOnSubmit(u);
+            db.SubmitChanges();
+        }
+        // Danh sách các thuộc tính
+        // Nhân Viên
+        [WebMethod]
+        public List<NHANVIEN> DanhSachNhanVien()
+        {
+            return db.NHANVIENs.ToList();
+        }
+        // Khách hàng 
+        [WebMethod]
+        public List<KHACHHANG> DanhSachKhachHang()
+        {
+            return db.KHACHHANGs.ToList();
+        }
+        // Loại xe
+        [WebMethod]
+        public List<LOAIXE> DanhSachLoaiXe()
         {
             return db.LOAIXEs.ToList();
         }
-
+        // Hãng xe
+        [WebMethod]
+        public List<NHACUNGCAP> DanhSachHangXe()
+        {
+            return db.NHACUNGCAPs.ToList();
+        }
         // Xử lí thuê xe
         // danh sách hợp đồng thuê xe
         [WebMethod]
