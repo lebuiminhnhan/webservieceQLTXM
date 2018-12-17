@@ -113,6 +113,14 @@ namespace WebServicesQLTXM
         {
             return db.NHACUNGCAPs.ToList();
         }
+        // Xử lí đặt xe
+
+        // Hợp đồng đặt trước
+        [WebMethod]
+        public List<HOPDONGDATTRUOC> DanhSachHopDongDatTruoc()
+        {
+            return db.HOPDONGDATTRUOCs.ToList();
+        }
         // Xử lí thuê xe
         // danh sách hợp đồng thuê xe
         [WebMethod]
