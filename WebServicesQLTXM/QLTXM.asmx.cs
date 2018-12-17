@@ -226,8 +226,13 @@ namespace WebServicesQLTXM
             return query.ToList();
 
         }
-    }
 
+        public string mahoa(string pass)
+        {
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(pass.Trim(), "SHA1");
+        }
+    }
+   
     public class THANHTOAN
     {
         public int SoDDT { get;  set; }
