@@ -114,7 +114,19 @@ namespace WebServicesQLTXM
             return db.NHACUNGCAPs.ToList();
         }
         // Xử lí đặt xe
-
+        // Thêm đơn đặt xe
+        public void ThemDatXe(int maxe, DateTime ngaydat, string trangthai, int makh)
+        {
+            HOPDONGDATTRUOC h = new HOPDONGDATTRUOC();
+            CHITIETXE x = db.CHITIETXEs.Where(y => y.MaXE == maxe).FirstOrDefault();
+            x.TrangThai = "Đang đặt";
+            h.MaXe = maxe;
+            h.MaKH = makh;
+            h.TrangThai = "Đang đặt";
+            h.NgayDenThue = ngaydat;
+            db.HOPDONGDATTRUOCs.InsertOnSubmit(h);
+            db.SubmitChanges();
+        }
         // Hợp đồng đặt trước
         [WebMethod]
         public List<HOPDONGDATTRUOC> DanhSachHopDongDatTruoc()
