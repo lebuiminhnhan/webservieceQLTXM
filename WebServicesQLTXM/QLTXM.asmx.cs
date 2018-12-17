@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -113,6 +114,27 @@ namespace WebServicesQLTXM
         {
             return db.NHACUNGCAPs.ToList();
         }
+        // upload ảnh
+        public void UploadHinhAnh(string file, int maxe, string name)
+        {
+            HINHANH h = new HINHANH();
+            XE_ANH x = db.XE_ANHs.Where(y => y.MaXe == maxe).FirstOrDefault();
+
+           
+          
+            h.Link = file;
+            h.Name = name;
+            x.IdAnh = h.Id;
+            x.MaXe = maxe;
+            db.HINHANHs.InsertOnSubmit(h);
+            db.SubmitChanges();
+           
+
+
+
+        
+        }
+    
         // Xử lí đặt xe
         // Thêm đơn đặt xe
         public void ThemDatXe(int maxe, DateTime ngaydat, string trangthai, int makh)
