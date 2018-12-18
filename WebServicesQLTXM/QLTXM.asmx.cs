@@ -118,7 +118,7 @@ namespace WebServicesQLTXM
         public void UploadHinhAnh(string file, int maxe, string name)
         {
             HINHANH h = new HINHANH();
-            XE_ANH x = db.XE_ANHs.Where(y => y.MaXe == maxe).FirstOrDefault();
+            XE_ANH x = new XE_ANH();
 
            
           
@@ -187,6 +187,38 @@ namespace WebServicesQLTXM
                         };
             return query.ToList();
                         
+        }
+        // Thêm chi tiết xe
+        public void ThemChiTietXe(string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string trangthai, string mausac)
+        {
+
+            CHITIETXE x = new CHITIETXE();
+            x.TenXE = tenxe;
+            x.BangSo = bienso;
+            x.DonGia = giathue;
+            x.MaLX = malx;
+            x.MaNCC = mancc;
+            x.MucGiamGia = mucgiamgia;
+            x.TrangThai = "Trống";
+            x.MauSac = mausac;
+            db.CHITIETXEs.InsertOnSubmit(x);
+            db.SubmitChanges();
+        }
+        // Sửa chi tiết xe
+        public void XeChiTietXe(int maxe,string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string trangthai, string mausac)
+        {
+
+            CHITIETXE x = db.CHITIETXEs.Where(y => y.MaXE == maxe).FirstOrDefault();
+            x.TenXE = tenxe;
+            x.BangSo = bienso;
+            x.DonGia = giathue;
+            x.MaLX = malx;
+            x.MaNCC = mancc;
+            x.MucGiamGia = mucgiamgia;
+            x.TrangThai = "Trống";
+            x.MauSac = mausac;
+          
+            db.SubmitChanges();
         }
         // cập nhật trạng thái xe
         public void CapNhatTrangThaiXe(int maxe)
