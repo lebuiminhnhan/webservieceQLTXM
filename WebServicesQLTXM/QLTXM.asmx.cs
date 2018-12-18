@@ -90,29 +90,35 @@ namespace WebServicesQLTXM
             db.SubmitChanges();
         }
         // Danh sách các thuộc tính
+        // chi tiết xe drop
+        [WebMethod]
+        public List<CHITIETXE> DanhSachXe()
+        {
+            return db.CHITIETXEs.OrderByDescending(x => x.MaXE).Where(y=>y.TrangThai=="Trống").ToList();
+        }
         // Nhân Viên
         [WebMethod]
         public List<NHANVIEN> DanhSachNhanVien()
         {
-            return db.NHANVIENs.ToList();
+            return db.NHANVIENs.OrderByDescending(x => x.MaNV).ToList();
         }
         // Khách hàng 
         [WebMethod]
         public List<KHACHHANG> DanhSachKhachHang()
         {
-            return db.KHACHHANGs.ToList();
+            return db.KHACHHANGs.OrderByDescending(x=>x.MaKH).ToList();
         }
         // Loại xe
         [WebMethod]
         public List<LOAIXE> DanhSachLoaiXe()
         {
-            return db.LOAIXEs.ToList();
+            return db.LOAIXEs.OrderByDescending(x => x.MaLoai).ToList();
         }
         // Hãng xe
         [WebMethod]
         public List<NHACUNGCAP> DanhSachHangXe()
         {
-            return db.NHACUNGCAPs.ToList();
+            return db.NHACUNGCAPs.OrderByDescending(x => x.MaNCC).ToList();
         }
         // upload ảnh
         public void UploadHinhAnh(string file, int maxe, string name)
@@ -153,30 +159,31 @@ namespace WebServicesQLTXM
         [WebMethod]
         public List<HOPDONGDATTRUOC> DanhSachHopDongDatTruoc()
         {
-            return db.HOPDONGDATTRUOCs.ToList();
+            return db.HOPDONGDATTRUOCs.OrderByDescending(x => x.MaKH).ToList();
         }
         // Xử lí thuê xe
         // danh sách hợp đồng thuê xe
         [WebMethod]
         public List<HOPDONGTHUE> DanhSachThue()
         {
-            return db.HOPDONGTHUEs.ToList();
+            return db.HOPDONGTHUEs.OrderByDescending(x => x.SoDDT).ToList();
         }
         // danh sách hợp đồng thuê xe
         [WebMethod]
         public List<HOPDONGTHUE> DanhSachThueChuaThanhToan()
         {
-            return db.HOPDONGTHUEs.Where(x=>x.TrangThai=="Đang Thuê").ToList();
+            return db.HOPDONGTHUEs.Where(x=>x.TrangThai=="Đang Thuê").OrderByDescending(x => x.MaKH).ToList();
         }
         // Danh sách xe chỉ hiển thị xe chưa thuê
         [WebMethod]
-        public List<CHITIETXE1> DanhSachXe()
+        public List<CHITIETXE1> DanhSachKhoXe()
         {
             var query = from x in db.CHITIETXEs
                       
                         select new CHITIETXE1
                         {
                             MaXe= x.MaXE,
+                            TenXe = x.TenXE,
                             GiaThue=x.DonGia,
                             MucGiamGia = x.MucGiamGia,
                             LoaiXe = x.LOAIXE.TenLoai,
@@ -189,7 +196,8 @@ namespace WebServicesQLTXM
                         
         }
         // Thêm chi tiết xe
-        public void ThemChiTietXe(string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string trangthai, string mausac)
+        [WebMethod]
+        public void ThemChiTietXe(string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string mausac)
         {
 
             CHITIETXE x = new CHITIETXE();
@@ -205,7 +213,8 @@ namespace WebServicesQLTXM
             db.SubmitChanges();
         }
         // Sửa chi tiết xe
-        public void XeChiTietXe(int maxe,string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string trangthai, string mausac)
+        [WebMethod]
+        public void XeChiTietXe(int maxe,string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string mausac)
         {
 
             CHITIETXE x = db.CHITIETXEs.Where(y => y.MaXE == maxe).FirstOrDefault();
@@ -221,6 +230,7 @@ namespace WebServicesQLTXM
             db.SubmitChanges();
         }
         // cập nhật trạng thái xe
+        [WebMethod]
         public void CapNhatTrangThaiXe(int maxe)
         {
             CHITIETXE h = db.CHITIETXEs.Where(x => x.MaXE == maxe).FirstOrDefault();
@@ -228,6 +238,13 @@ namespace WebServicesQLTXM
             h.TrangThai = "Đang thuê";
 
             db.SubmitChanges();
+        }
+        // loc hop dong thue
+        [WebMethod]
+        public List<HOPDONGTHUE> LocHopDongThue(string trangthai)
+        {
+            return db.HOPDONGTHUEs.Where(x => x.TrangThai == trangthai).OrderByDescending(x => x.MaKH).ToList();
+
         }
         // thêm hợp đồng thuê
         [WebMethod]
@@ -304,12 +321,23 @@ namespace WebServicesQLTXM
     public class CHITIETXE1
     {
         public int MaXe { get;  set; }
+
+        public string TenXe { get; set; }
+
         public int GiaThue { get;  set; }
+
         public int? MucGiamGia { get;  set; }
+
         public string LoaiXe { get;  set; }
+
         public string HangXe { get;  set; }
+
         public string BangSo { get;  set; }
+
         public string MauSac { get;  set; }
+
         public string TrangThai { get;  set; }
+
+       
     }
 }
