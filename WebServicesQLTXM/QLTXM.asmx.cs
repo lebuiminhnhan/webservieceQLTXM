@@ -121,28 +121,48 @@ namespace WebServicesQLTXM
             return db.NHACUNGCAPs.OrderByDescending(x => x.MaNCC).ToList();
         }
         // upload ảnh
-        public void UploadHinhAnh(string file, int maxe, string name)
+        [WebMethod]
+        public List<CHITIETXE2> DanhSachAllXe()
+        {
+            var query = from x in db.CHITIETXEs
+                        select new CHITIETXE2
+                        {
+                            TenBangSo = x.TenXE + " có biển số " + x.BangSo,
+                            MaXe = x.MaXE
+                        };
+            return query.ToList();
+        }
+        [WebMethod]
+        public void UploadHinhAnh(string file, string name, int maxe)
         {
             HINHANH h = new HINHANH();
-            XE_ANH x = new XE_ANH();
-
-           
-          
+            
+              
             h.Link = file;
             h.Name = name;
-            x.IdAnh = h.Id;
-            x.MaXe = maxe;
+           
             db.HINHANHs.InsertOnSubmit(h);
             db.SubmitChanges();
-           
+            int idanh = h.Id;
+            XE_ANH x = new XE_ANH();
+            x.IdAnh = idanh;
+            x.MaXe = maxe;
+            db.XE_ANHs.InsertOnSubmit(x);
+            db.SubmitChanges();
 
-
-
-        
         }
-    
+         [WebMethod]
+        public void UploadXeAnh(int maxe, int idanh)
+        {
+            XE_ANH x = new XE_ANH();
+            x.IdAnh = idanh;
+            x.MaXe = maxe;
+            db.XE_ANHs.InsertOnSubmit(x);
+            db.SubmitChanges();
+        }
         // Xử lí đặt xe
         // Thêm đơn đặt xe
+        [WebMethod]
         public void ThemDatXe(int maxe, DateTime ngaydat, string trangthai, int makh)
         {
             HOPDONGDATTRUOC h = new HOPDONGDATTRUOC();
@@ -303,7 +323,13 @@ namespace WebServicesQLTXM
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(pass.Trim(), "SHA1");
         }
     }
-   
+
+    public class CHITIETXE2
+    {
+        public string TenBangSo { get; set; }
+        public int MaXe { get;  set; }
+    }
+
     public class THANHTOAN
     {
         public int SoDDT { get;  set; }
