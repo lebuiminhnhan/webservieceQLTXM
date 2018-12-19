@@ -1,25 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLTXM" Class="QLTXMDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=GROOT\SQLEXPRESS;Initial Catalog=QLTXM;Integrated Security=True" SettingsObjectName="WebServicesQLTXM.Properties.Settings" SettingsPropertyName="QLTXMConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.CHITIETXE" Member="CHITIETXEs">
-    <Type Name="CHITIETXE">
-      <Column Name="MaXE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TenXE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="BangSo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="TrangThai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="MauSac" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DonGia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MaNCC" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MaLX" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MaKH" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="MucGiamGia" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="CHITIETXE_HOPDONGDATTRUOC" Member="HOPDONGDATTRUOCs" AccessModifier="Internal" ThisKey="MaXE" OtherKey="MaXe" Type="HOPDONGDATTRUOC" />
-      <Association Name="CHITIETXE_HOPDONGTHUE" Member="HOPDONGTHUEs" AccessModifier="Internal" ThisKey="MaXE" OtherKey="MaXe" Type="HOPDONGTHUE" />
-      <Association Name="CHITIETXE_XE_ANH" Member="XE_ANHs" AccessModifier="Internal" ThisKey="MaXE" OtherKey="MaXe" Type="XE_ANH" />
-      <Association Name="KHACHHANG_CHITIETXE" Member="KHACHHANG" ThisKey="MaKH" OtherKey="MaKH" Type="KHACHHANG" IsForeignKey="true" />
-      <Association Name="LOAIXE_CHITIETXE" Member="LOAIXE" ThisKey="MaLX" OtherKey="MaLoai" Type="LOAIXE" IsForeignKey="true" />
-      <Association Name="NHACUNGCAP_CHITIETXE" Member="NHACUNGCAP" ThisKey="MaNCC" OtherKey="MaNCC" Type="NHACUNGCAP" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.HINHANH" Member="HINHANHs">
     <Type Name="HINHANH">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -35,8 +15,8 @@
       <Column Name="NgayDenThue" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="TrangThai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="MaKH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="CHITIETXE_HOPDONGDATTRUOC" Member="CHITIETXE" ThisKey="MaXe" OtherKey="MaXE" Type="CHITIETXE" IsForeignKey="true" />
       <Association Name="KHACHHANG_HOPDONGDATTRUOC" Member="KHACHHANG" ThisKey="MaKH" OtherKey="MaKH" Type="KHACHHANG" IsForeignKey="true" />
+      <Association Name="CHITIETXE_HOPDONGDATTRUOC" Member="CHITIETXE" ThisKey="MaXe" OtherKey="MaXE" Type="CHITIETXE" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.HOPDONGTHUE" Member="HOPDONGTHUEs">
@@ -50,9 +30,9 @@
       <Column Name="TrangThai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="MaKH" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="MaNV" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="CHITIETXE_HOPDONGTHUE" Member="CHITIETXE" ThisKey="MaXe" OtherKey="MaXE" Type="CHITIETXE" IsForeignKey="true" />
       <Association Name="KHACHHANG_HOPDONGTHUE" Member="KHACHHANG" ThisKey="MaKH" OtherKey="MaKH" Type="KHACHHANG" IsForeignKey="true" />
       <Association Name="NHANVIEN_HOPDONGTHUE" Member="NHANVIEN" ThisKey="MaNV" OtherKey="MaNV" Type="NHANVIEN" IsForeignKey="true" />
+      <Association Name="CHITIETXE_HOPDONGTHUE" Member="CHITIETXE" ThisKey="MaXe" OtherKey="MaXE" Type="CHITIETXE" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.KHACHHANG" Member="KHACHHANGs">
@@ -65,10 +45,10 @@
       <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="DienThoai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="KHACHHANG_CHITIETXE" Member="CHITIETXEs" AccessModifier="Internal" ThisKey="MaKH" OtherKey="MaKH" Type="CHITIETXE" />
       <Association Name="KHACHHANG_HOPDONGDATTRUOC" Member="HOPDONGDATTRUOCs" AccessModifier="Internal" ThisKey="MaKH" OtherKey="MaKH" Type="HOPDONGDATTRUOC" />
       <Association Name="KHACHHANG_HOPDONGTHUE" Member="HOPDONGTHUEs" AccessModifier="Internal" ThisKey="MaKH" OtherKey="MaKH" Type="HOPDONGTHUE" />
       <Association Name="KHACHHANG_User_User" Member="User_Users" AccessModifier="Internal" ThisKey="MaKH" OtherKey="MaKH" Type="User_User" />
+      <Association Name="KHACHHANG_CHITIETXE" Member="CHITIETXEs" AccessModifier="Internal" ThisKey="MaKH" OtherKey="MaKH" Type="CHITIETXE" />
     </Type>
   </Table>
   <Table Name="dbo.LOAIXE" Member="LOAIXEs">
@@ -122,8 +102,29 @@
     <Type Name="XE_ANH">
       <Column Name="MaXe" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="IdAnh" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="CHITIETXE_XE_ANH" Member="CHITIETXE" ThisKey="MaXe" OtherKey="MaXE" Type="CHITIETXE" IsForeignKey="true" />
       <Association Name="HINHANH_XE_ANH" Member="HINHANH" ThisKey="IdAnh" OtherKey="Id" Type="HINHANH" IsForeignKey="true" />
+      <Association Name="CHITIETXE_XE_ANH" Member="CHITIETXE" ThisKey="MaXe" OtherKey="MaXE" Type="CHITIETXE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CHITIETXE" Member="CHITIETXEs">
+    <Type Name="CHITIETXE">
+      <Column Name="MaXE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenXE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="BangSo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TrangThai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MauSac" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DonGia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MaNCC" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MaLX" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MaKH" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MucGiamGia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mota" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="CHITIETXE_HOPDONGDATTRUOC" Member="HOPDONGDATTRUOCs" AccessModifier="Internal" ThisKey="MaXE" OtherKey="MaXe" Type="HOPDONGDATTRUOC" />
+      <Association Name="CHITIETXE_HOPDONGTHUE" Member="HOPDONGTHUEs" AccessModifier="Internal" ThisKey="MaXE" OtherKey="MaXe" Type="HOPDONGTHUE" />
+      <Association Name="CHITIETXE_XE_ANH" Member="XE_ANHs" AccessModifier="Internal" ThisKey="MaXE" OtherKey="MaXe" Type="XE_ANH" />
+      <Association Name="KHACHHANG_CHITIETXE" Member="KHACHHANG" ThisKey="MaKH" OtherKey="MaKH" Type="KHACHHANG" IsForeignKey="true" />
+      <Association Name="LOAIXE_CHITIETXE" Member="LOAIXE" ThisKey="MaLX" OtherKey="MaLoai" Type="LOAIXE" IsForeignKey="true" />
+      <Association Name="NHACUNGCAP_CHITIETXE" Member="NHACUNGCAP" ThisKey="MaNCC" OtherKey="MaNCC" Type="NHACUNGCAP" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

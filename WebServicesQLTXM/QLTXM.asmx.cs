@@ -217,7 +217,7 @@ namespace WebServicesQLTXM
         }
         // Thêm chi tiết xe
         [WebMethod]
-        public void ThemChiTietXe(string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string mausac)
+        public void ThemChiTietXe(string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string mausac,string mota)
         {
 
             CHITIETXE x = new CHITIETXE();
@@ -229,6 +229,7 @@ namespace WebServicesQLTXM
             x.MucGiamGia = mucgiamgia;
             x.TrangThai = "Trống";
             x.MauSac = mausac;
+            x.Mota = mota;
             db.CHITIETXEs.InsertOnSubmit(x);
             db.SubmitChanges();
         }
@@ -326,10 +327,10 @@ namespace WebServicesQLTXM
         ///Trang home
         /// show xe tay ga
         [WebMethod]
-        public List<XE_ANH1> ShowTayga()
+        public List<XE_ANH1> ShowChiTiet(int maxe)
         {
             var query = from a in db.XE_ANHs
-                        where a.CHITIETXE.LOAIXE.TenLoai == "Tay Ga"
+                        where a.CHITIETXE.MaXE == maxe
                         select new XE_ANH1
                         {
                             Id = a.HINHANH.Id,
@@ -339,48 +340,214 @@ namespace WebServicesQLTXM
                             MucGiam = a.CHITIETXE.MucGiamGia,
                             BangSo= a.CHITIETXE.BangSo,
                             LoaiXe=a.CHITIETXE.LOAIXE.TenLoai,
-                            HangXe=a.CHITIETXE.NHACUNGCAP.TenNCC
+                            HangXe=a.CHITIETXE.NHACUNGCAP.TenNCC,
+                            Mota = a.CHITIETXE.Mota
                         };
-            return query.Take(1).ToList();
+            return query.ToList();
         }
-        /// show xe tay ga
+        // show tay ga
         [WebMethod]
-        public List<XE_ANH1> ShowConTay()
+        public List<CHITIETXE3> DanhSachTayGaTam(int maXe)
         {
-            var query = from a in db.XE_ANHs
-                        where a.CHITIETXE.LOAIXE.TenLoai == "Côn Tay"
-                        select new XE_ANH1
+            var query = from x in db.CHITIETXEs 
+                        where x.LOAIXE.TenLoai == "Tay Ga"  && x.MaXE == maXe
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+
+                        select new CHITIETXE3
                         {
+                            MaXe = x.MaXE,
+                            TenXe = x.TenXE,
+                            GiaThue = x.DonGia,
+                            MucGiamGia = x.MucGiamGia,
+                            LoaiXe = x.LOAIXE.TenLoai,
+                            HangXe = x.NHACUNGCAP.TenNCC,
+                            BangSo = x.BangSo,
+                            MauSac = x.MauSac,
+                            TrangThai = x.TrangThai,
                             Id = a.HINHANH.Id,
                             Name = a.HINHANH.Name,
                             Link = a.HINHANH.Link,
-                            GiaThue = a.CHITIETXE.DonGia,
-                            MucGiam = a.CHITIETXE.MucGiamGia,
-                            BangSo = a.CHITIETXE.BangSo,
-                            LoaiXe = a.CHITIETXE.LOAIXE.TenLoai,
-                            HangXe = a.CHITIETXE.NHACUNGCAP.TenNCC
                         };
+
+           
+
             return query.Take(1).ToList();
+
         }
-        /// show xe tay ga
+        // show tay ga
         [WebMethod]
-        public List<XE_ANH1> ShowXeSo()
+        public List<CHITIETXE3> DanhSachTayGa()
         {
-            var query = from a in db.XE_ANHs
-                        where a.CHITIETXE.LOAIXE.TenLoai == "Xe So"
-                        select new XE_ANH1
+            var query = from x in db.CHITIETXEs // ua bang chi tiet xe la bang xe ha uk som tui laasy bảng xe anh nó cũng bị dậy
+                        where x.LOAIXE.TenLoai == "Tay Ga" && x.TrangThai == "Trống"
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        group x by x.MaXE into g
+                        select new MoiNE
                         {
+                            MaXe = g.Key,
+
+                        };
+            List<CHITIETXE3> xeMoi = new List<CHITIETXE3>();
+            foreach (var i in query)
+            {
+                xeMoi = xeMoi.Concat(DanhSachTayGaTam(i.MaXe)).ToList();//CHo nay phai add Item vo dc la ngon r ,
+            }
+            return xeMoi.ToList();
+
+        }
+        //show xe số
+        [WebMethod]
+        public List<CHITIETXE3> DanhSachXeSoTam(int maXe)
+        {
+            var query = from x in db.CHITIETXEs
+                        where x.LOAIXE.TenLoai == "Xe Số" && x.MaXE == maXe
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+
+                        select new CHITIETXE3
+                        {
+                            MaXe = x.MaXE,
+                            TenXe = x.TenXE,
+                            GiaThue = x.DonGia,
+                            MucGiamGia = x.MucGiamGia,
+                            LoaiXe = x.LOAIXE.TenLoai,
+                            HangXe = x.NHACUNGCAP.TenNCC,
+                            BangSo = x.BangSo,
+                            MauSac = x.MauSac,
+                            TrangThai = x.TrangThai,
                             Id = a.HINHANH.Id,
                             Name = a.HINHANH.Name,
                             Link = a.HINHANH.Link,
-                            GiaThue = a.CHITIETXE.DonGia,
-                            MucGiam = a.CHITIETXE.MucGiamGia,
-                            BangSo = a.CHITIETXE.BangSo,
-                            LoaiXe = a.CHITIETXE.LOAIXE.TenLoai,
-                            HangXe = a.CHITIETXE.NHACUNGCAP.TenNCC
                         };
+
+
+
             return query.Take(1).ToList();
+
         }
+        // show tay ga
+        [WebMethod]
+        public List<CHITIETXE3> DanhSachXeSo()
+        {
+            var query = from x in db.CHITIETXEs 
+                        where x.LOAIXE.TenLoai == "Xe Số" && x.TrangThai == "Trống"
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        group x by x.MaXE into g
+                        select new MoiNE
+                        {
+                            MaXe = g.Key,
+
+                        };
+            List<CHITIETXE3> xeMoi = new List<CHITIETXE3>();
+            foreach (var i in query)
+            {
+                xeMoi = xeMoi.Concat(DanhSachXeSoTam(i.MaXe)).ToList();
+            }
+            return xeMoi.ToList();
+
+        }
+        // show xe côn tay
+        public List<CHITIETXE3> DanhSachConTayTam(int maXe)
+        {
+            var query = from x in db.CHITIETXEs
+                        where x.LOAIXE.TenLoai == "Côn Tay" && x.MaXE == maXe
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+
+                        select new CHITIETXE3
+                        {
+                            MaXe = x.MaXE,
+                            TenXe = x.TenXE,
+                            GiaThue = x.DonGia,
+                            MucGiamGia = x.MucGiamGia,
+                            LoaiXe = x.LOAIXE.TenLoai,
+                            HangXe = x.NHACUNGCAP.TenNCC,
+                            BangSo = x.BangSo,
+                            MauSac = x.MauSac,
+                            TrangThai = x.TrangThai,
+                            Id = a.HINHANH.Id,
+                            Name = a.HINHANH.Name,
+                            Link = a.HINHANH.Link,
+                        };
+
+
+
+            return query.Take(1).ToList();
+
+        }
+        // show tay ga
+        [WebMethod]
+        public List<CHITIETXE3> DanhSachConTay()
+        {
+            var query = from x in db.CHITIETXEs
+                        where x.LOAIXE.TenLoai == "Côn Tay" && x.TrangThai == "Trống"
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        group x by x.MaXE into g
+                        select new MoiNE
+                        {
+                            MaXe = g.Key,
+
+                        };
+            List<CHITIETXE3> xeMoi = new List<CHITIETXE3>();
+            foreach (var i in query)
+            {
+                xeMoi = xeMoi.Concat(DanhSachConTayTam(i.MaXe)).ToList();
+            }
+            return xeMoi.ToList();
+
+        }
+        /// show in home
+        ///  [WebMethod]
+        public List<CHITIETXE3> DanhSachTatCa()
+        {
+            var query = from x in db.CHITIETXEs
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        select new CHITIETXE3
+                        {
+                            MaXe = x.MaXE,
+                            TenXe = x.TenXE,
+                            GiaThue = x.DonGia,
+                            MucGiamGia = x.MucGiamGia,
+                            LoaiXe = x.LOAIXE.TenLoai,
+                            HangXe = x.NHACUNGCAP.TenNCC,
+                            BangSo = x.BangSo,
+                            MauSac = x.MauSac,
+                            TrangThai = x.TrangThai,
+                            Id = a.HINHANH.Id,
+                            Name = a.HINHANH.Name,
+                            Link = a.HINHANH.Link,
+                        };
+            return query.ToList();
+
+        }
+       
+    }
+
+    public class MoiNE
+    {
+        public int MaXe { get; set; }
+    }
+
+    public class CHITIETXE3
+    {
+        public int MaXe { get; set; }
+
+        public string TenXe { get; set; }
+
+        public int GiaThue { get; set; }
+
+        public int? MucGiamGia { get; set; }
+
+        public string LoaiXe { get; set; }
+
+        public string HangXe { get; set; }
+
+        public string BangSo { get; set; }
+
+        public string MauSac { get; set; }
+
+        public string TrangThai { get; set; }
+        public int Id { get;  set; }
+        public string Name { get;  set; }
+        public string Link { get; set; }
     }
 
     public class XE_ANH1
@@ -393,6 +560,7 @@ namespace WebServicesQLTXM
         public string BangSo { get;  set; }
         public string LoaiXe { get;  set; }
         public string HangXe { get;  set; }
+        public string Mota { get;  set; }
     }
 
     public class CHITIETXE2

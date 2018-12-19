@@ -30,9 +30,6 @@ namespace WebServicesQLTXM
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCHITIETXE(CHITIETXE instance);
-    partial void UpdateCHITIETXE(CHITIETXE instance);
-    partial void DeleteCHITIETXE(CHITIETXE instance);
     partial void InsertHINHANH(HINHANH instance);
     partial void UpdateHINHANH(HINHANH instance);
     partial void DeleteHINHANH(HINHANH instance);
@@ -63,6 +60,9 @@ namespace WebServicesQLTXM
     partial void InsertXE_ANH(XE_ANH instance);
     partial void UpdateXE_ANH(XE_ANH instance);
     partial void DeleteXE_ANH(XE_ANH instance);
+    partial void InsertCHITIETXE(CHITIETXE instance);
+    partial void UpdateCHITIETXE(CHITIETXE instance);
+    partial void DeleteCHITIETXE(CHITIETXE instance);
     #endregion
 		
 		public QLTXMDataContext() : 
@@ -93,14 +93,6 @@ namespace WebServicesQLTXM
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<CHITIETXE> CHITIETXEs
-		{
-			get
-			{
-				return this.GetTable<CHITIETXE>();
-			}
 		}
 		
 		public System.Data.Linq.Table<HINHANH> HINHANHs
@@ -182,490 +174,13 @@ namespace WebServicesQLTXM
 				return this.GetTable<XE_ANH>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CHITIETXE")]
-	public partial class CHITIETXE : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _MaXE;
-		
-		private string _TenXE;
-		
-		private string _BangSo;
-		
-		private string _TrangThai;
-		
-		private string _MauSac;
-		
-		private int _DonGia;
-		
-		private int _MaNCC;
-		
-		private int _MaLX;
-		
-		private System.Nullable<int> _MaKH;
-		
-		private System.Nullable<int> _MucGiamGia;
-		
-		private EntitySet<HOPDONGDATTRUOC> _HOPDONGDATTRUOCs;
-		
-		private EntitySet<HOPDONGTHUE> _HOPDONGTHUEs;
-		
-		private EntitySet<XE_ANH> _XE_ANHs;
-		
-		private EntityRef<KHACHHANG> _KHACHHANG;
-		
-		private EntityRef<LOAIXE> _LOAIXE;
-		
-		private EntityRef<NHACUNGCAP> _NHACUNGCAP;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMaXEChanging(int value);
-    partial void OnMaXEChanged();
-    partial void OnTenXEChanging(string value);
-    partial void OnTenXEChanged();
-    partial void OnBangSoChanging(string value);
-    partial void OnBangSoChanged();
-    partial void OnTrangThaiChanging(string value);
-    partial void OnTrangThaiChanged();
-    partial void OnMauSacChanging(string value);
-    partial void OnMauSacChanged();
-    partial void OnDonGiaChanging(int value);
-    partial void OnDonGiaChanged();
-    partial void OnMaNCCChanging(int value);
-    partial void OnMaNCCChanged();
-    partial void OnMaLXChanging(int value);
-    partial void OnMaLXChanged();
-    partial void OnMaKHChanging(System.Nullable<int> value);
-    partial void OnMaKHChanged();
-    partial void OnMucGiamGiaChanging(System.Nullable<int> value);
-    partial void OnMucGiamGiaChanged();
-    #endregion
-		
-		public CHITIETXE()
-		{
-			this._HOPDONGDATTRUOCs = new EntitySet<HOPDONGDATTRUOC>(new Action<HOPDONGDATTRUOC>(this.attach_HOPDONGDATTRUOCs), new Action<HOPDONGDATTRUOC>(this.detach_HOPDONGDATTRUOCs));
-			this._HOPDONGTHUEs = new EntitySet<HOPDONGTHUE>(new Action<HOPDONGTHUE>(this.attach_HOPDONGTHUEs), new Action<HOPDONGTHUE>(this.detach_HOPDONGTHUEs));
-			this._XE_ANHs = new EntitySet<XE_ANH>(new Action<XE_ANH>(this.attach_XE_ANHs), new Action<XE_ANH>(this.detach_XE_ANHs));
-			this._KHACHHANG = default(EntityRef<KHACHHANG>);
-			this._LOAIXE = default(EntityRef<LOAIXE>);
-			this._NHACUNGCAP = default(EntityRef<NHACUNGCAP>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaXE", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int MaXE
+		public System.Data.Linq.Table<CHITIETXE> CHITIETXEs
 		{
 			get
 			{
-				return this._MaXE;
+				return this.GetTable<CHITIETXE>();
 			}
-			set
-			{
-				if ((this._MaXE != value))
-				{
-					this.OnMaXEChanging(value);
-					this.SendPropertyChanging();
-					this._MaXE = value;
-					this.SendPropertyChanged("MaXE");
-					this.OnMaXEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenXE", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TenXE
-		{
-			get
-			{
-				return this._TenXE;
-			}
-			set
-			{
-				if ((this._TenXE != value))
-				{
-					this.OnTenXEChanging(value);
-					this.SendPropertyChanging();
-					this._TenXE = value;
-					this.SendPropertyChanged("TenXE");
-					this.OnTenXEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BangSo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string BangSo
-		{
-			get
-			{
-				return this._BangSo;
-			}
-			set
-			{
-				if ((this._BangSo != value))
-				{
-					this.OnBangSoChanging(value);
-					this.SendPropertyChanging();
-					this._BangSo = value;
-					this.SendPropertyChanged("BangSo");
-					this.OnBangSoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string TrangThai
-		{
-			get
-			{
-				return this._TrangThai;
-			}
-			set
-			{
-				if ((this._TrangThai != value))
-				{
-					this.OnTrangThaiChanging(value);
-					this.SendPropertyChanging();
-					this._TrangThai = value;
-					this.SendPropertyChanged("TrangThai");
-					this.OnTrangThaiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string MauSac
-		{
-			get
-			{
-				return this._MauSac;
-			}
-			set
-			{
-				if ((this._MauSac != value))
-				{
-					this.OnMauSacChanging(value);
-					this.SendPropertyChanging();
-					this._MauSac = value;
-					this.SendPropertyChanged("MauSac");
-					this.OnMauSacChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DonGia", DbType="Int NOT NULL")]
-		public int DonGia
-		{
-			get
-			{
-				return this._DonGia;
-			}
-			set
-			{
-				if ((this._DonGia != value))
-				{
-					this.OnDonGiaChanging(value);
-					this.SendPropertyChanging();
-					this._DonGia = value;
-					this.SendPropertyChanged("DonGia");
-					this.OnDonGiaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaNCC", DbType="Int NOT NULL")]
-		public int MaNCC
-		{
-			get
-			{
-				return this._MaNCC;
-			}
-			set
-			{
-				if ((this._MaNCC != value))
-				{
-					if (this._NHACUNGCAP.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaNCCChanging(value);
-					this.SendPropertyChanging();
-					this._MaNCC = value;
-					this.SendPropertyChanged("MaNCC");
-					this.OnMaNCCChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaLX", DbType="Int NOT NULL")]
-		public int MaLX
-		{
-			get
-			{
-				return this._MaLX;
-			}
-			set
-			{
-				if ((this._MaLX != value))
-				{
-					if (this._LOAIXE.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaLXChanging(value);
-					this.SendPropertyChanging();
-					this._MaLX = value;
-					this.SendPropertyChanged("MaLX");
-					this.OnMaLXChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaKH", DbType="Int")]
-		public System.Nullable<int> MaKH
-		{
-			get
-			{
-				return this._MaKH;
-			}
-			set
-			{
-				if ((this._MaKH != value))
-				{
-					if (this._KHACHHANG.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaKHChanging(value);
-					this.SendPropertyChanging();
-					this._MaKH = value;
-					this.SendPropertyChanged("MaKH");
-					this.OnMaKHChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MucGiamGia", DbType="Int")]
-		public System.Nullable<int> MucGiamGia
-		{
-			get
-			{
-				return this._MucGiamGia;
-			}
-			set
-			{
-				if ((this._MucGiamGia != value))
-				{
-					this.OnMucGiamGiaChanging(value);
-					this.SendPropertyChanging();
-					this._MucGiamGia = value;
-					this.SendPropertyChanged("MucGiamGia");
-					this.OnMucGiamGiaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGDATTRUOC", Storage="_HOPDONGDATTRUOCs", ThisKey="MaXE", OtherKey="MaXe")]
-		internal EntitySet<HOPDONGDATTRUOC> HOPDONGDATTRUOCs
-		{
-			get
-			{
-				return this._HOPDONGDATTRUOCs;
-			}
-			set
-			{
-				this._HOPDONGDATTRUOCs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGTHUE", Storage="_HOPDONGTHUEs", ThisKey="MaXE", OtherKey="MaXe")]
-		internal EntitySet<HOPDONGTHUE> HOPDONGTHUEs
-		{
-			get
-			{
-				return this._HOPDONGTHUEs;
-			}
-			set
-			{
-				this._HOPDONGTHUEs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_XE_ANH", Storage="_XE_ANHs", ThisKey="MaXE", OtherKey="MaXe")]
-		internal EntitySet<XE_ANH> XE_ANHs
-		{
-			get
-			{
-				return this._XE_ANHs;
-			}
-			set
-			{
-				this._XE_ANHs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_CHITIETXE", Storage="_KHACHHANG", ThisKey="MaKH", OtherKey="MaKH", IsForeignKey=true)]
-		public KHACHHANG KHACHHANG
-		{
-			get
-			{
-				return this._KHACHHANG.Entity;
-			}
-			set
-			{
-				KHACHHANG previousValue = this._KHACHHANG.Entity;
-				if (((previousValue != value) 
-							|| (this._KHACHHANG.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._KHACHHANG.Entity = null;
-						previousValue.CHITIETXEs.Remove(this);
-					}
-					this._KHACHHANG.Entity = value;
-					if ((value != null))
-					{
-						value.CHITIETXEs.Add(this);
-						this._MaKH = value.MaKH;
-					}
-					else
-					{
-						this._MaKH = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("KHACHHANG");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LOAIXE_CHITIETXE", Storage="_LOAIXE", ThisKey="MaLX", OtherKey="MaLoai", IsForeignKey=true)]
-		public LOAIXE LOAIXE
-		{
-			get
-			{
-				return this._LOAIXE.Entity;
-			}
-			set
-			{
-				LOAIXE previousValue = this._LOAIXE.Entity;
-				if (((previousValue != value) 
-							|| (this._LOAIXE.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._LOAIXE.Entity = null;
-						previousValue.CHITIETXEs.Remove(this);
-					}
-					this._LOAIXE.Entity = value;
-					if ((value != null))
-					{
-						value.CHITIETXEs.Add(this);
-						this._MaLX = value.MaLoai;
-					}
-					else
-					{
-						this._MaLX = default(int);
-					}
-					this.SendPropertyChanged("LOAIXE");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NHACUNGCAP_CHITIETXE", Storage="_NHACUNGCAP", ThisKey="MaNCC", OtherKey="MaNCC", IsForeignKey=true)]
-		public NHACUNGCAP NHACUNGCAP
-		{
-			get
-			{
-				return this._NHACUNGCAP.Entity;
-			}
-			set
-			{
-				NHACUNGCAP previousValue = this._NHACUNGCAP.Entity;
-				if (((previousValue != value) 
-							|| (this._NHACUNGCAP.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._NHACUNGCAP.Entity = null;
-						previousValue.CHITIETXEs.Remove(this);
-					}
-					this._NHACUNGCAP.Entity = value;
-					if ((value != null))
-					{
-						value.CHITIETXEs.Add(this);
-						this._MaNCC = value.MaNCC;
-					}
-					else
-					{
-						this._MaNCC = default(int);
-					}
-					this.SendPropertyChanged("NHACUNGCAP");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_HOPDONGDATTRUOCs(HOPDONGDATTRUOC entity)
-		{
-			this.SendPropertyChanging();
-			entity.CHITIETXE = this;
-		}
-		
-		private void detach_HOPDONGDATTRUOCs(HOPDONGDATTRUOC entity)
-		{
-			this.SendPropertyChanging();
-			entity.CHITIETXE = null;
-		}
-		
-		private void attach_HOPDONGTHUEs(HOPDONGTHUE entity)
-		{
-			this.SendPropertyChanging();
-			entity.CHITIETXE = this;
-		}
-		
-		private void detach_HOPDONGTHUEs(HOPDONGTHUE entity)
-		{
-			this.SendPropertyChanging();
-			entity.CHITIETXE = null;
-		}
-		
-		private void attach_XE_ANHs(XE_ANH entity)
-		{
-			this.SendPropertyChanging();
-			entity.CHITIETXE = this;
-		}
-		
-		private void detach_XE_ANHs(XE_ANH entity)
-		{
-			this.SendPropertyChanging();
-			entity.CHITIETXE = null;
 		}
 	}
 	
@@ -823,9 +338,9 @@ namespace WebServicesQLTXM
 		
 		private int _MaKH;
 		
-		private EntityRef<CHITIETXE> _CHITIETXE;
-		
 		private EntityRef<KHACHHANG> _KHACHHANG;
+		
+		private EntityRef<CHITIETXE> _CHITIETXE;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -845,8 +360,8 @@ namespace WebServicesQLTXM
 		
 		public HOPDONGDATTRUOC()
 		{
-			this._CHITIETXE = default(EntityRef<CHITIETXE>);
 			this._KHACHHANG = default(EntityRef<KHACHHANG>);
+			this._CHITIETXE = default(EntityRef<CHITIETXE>);
 			OnCreated();
 		}
 		
@@ -958,40 +473,6 @@ namespace WebServicesQLTXM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGDATTRUOC", Storage="_CHITIETXE", ThisKey="MaXe", OtherKey="MaXE", IsForeignKey=true)]
-		public CHITIETXE CHITIETXE
-		{
-			get
-			{
-				return this._CHITIETXE.Entity;
-			}
-			set
-			{
-				CHITIETXE previousValue = this._CHITIETXE.Entity;
-				if (((previousValue != value) 
-							|| (this._CHITIETXE.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CHITIETXE.Entity = null;
-						previousValue.HOPDONGDATTRUOCs.Remove(this);
-					}
-					this._CHITIETXE.Entity = value;
-					if ((value != null))
-					{
-						value.HOPDONGDATTRUOCs.Add(this);
-						this._MaXe = value.MaXE;
-					}
-					else
-					{
-						this._MaXe = default(int);
-					}
-					this.SendPropertyChanged("CHITIETXE");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_HOPDONGDATTRUOC", Storage="_KHACHHANG", ThisKey="MaKH", OtherKey="MaKH", IsForeignKey=true)]
 		public KHACHHANG KHACHHANG
 		{
@@ -1022,6 +503,40 @@ namespace WebServicesQLTXM
 						this._MaKH = default(int);
 					}
 					this.SendPropertyChanged("KHACHHANG");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGDATTRUOC", Storage="_CHITIETXE", ThisKey="MaXe", OtherKey="MaXE", IsForeignKey=true)]
+		public CHITIETXE CHITIETXE
+		{
+			get
+			{
+				return this._CHITIETXE.Entity;
+			}
+			set
+			{
+				CHITIETXE previousValue = this._CHITIETXE.Entity;
+				if (((previousValue != value) 
+							|| (this._CHITIETXE.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CHITIETXE.Entity = null;
+						previousValue.HOPDONGDATTRUOCs.Remove(this);
+					}
+					this._CHITIETXE.Entity = value;
+					if ((value != null))
+					{
+						value.HOPDONGDATTRUOCs.Add(this);
+						this._MaXe = value.MaXE;
+					}
+					else
+					{
+						this._MaXe = default(int);
+					}
+					this.SendPropertyChanged("CHITIETXE");
 				}
 			}
 		}
@@ -1071,11 +586,11 @@ namespace WebServicesQLTXM
 		
 		private int _MaNV;
 		
-		private EntityRef<CHITIETXE> _CHITIETXE;
-		
 		private EntityRef<KHACHHANG> _KHACHHANG;
 		
 		private EntityRef<NHANVIEN> _NHANVIEN;
+		
+		private EntityRef<CHITIETXE> _CHITIETXE;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1103,9 +618,9 @@ namespace WebServicesQLTXM
 		
 		public HOPDONGTHUE()
 		{
-			this._CHITIETXE = default(EntityRef<CHITIETXE>);
 			this._KHACHHANG = default(EntityRef<KHACHHANG>);
 			this._NHANVIEN = default(EntityRef<NHANVIEN>);
+			this._CHITIETXE = default(EntityRef<CHITIETXE>);
 			OnCreated();
 		}
 		
@@ -1301,40 +816,6 @@ namespace WebServicesQLTXM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGTHUE", Storage="_CHITIETXE", ThisKey="MaXe", OtherKey="MaXE", IsForeignKey=true)]
-		public CHITIETXE CHITIETXE
-		{
-			get
-			{
-				return this._CHITIETXE.Entity;
-			}
-			set
-			{
-				CHITIETXE previousValue = this._CHITIETXE.Entity;
-				if (((previousValue != value) 
-							|| (this._CHITIETXE.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CHITIETXE.Entity = null;
-						previousValue.HOPDONGTHUEs.Remove(this);
-					}
-					this._CHITIETXE.Entity = value;
-					if ((value != null))
-					{
-						value.HOPDONGTHUEs.Add(this);
-						this._MaXe = value.MaXE;
-					}
-					else
-					{
-						this._MaXe = default(int);
-					}
-					this.SendPropertyChanged("CHITIETXE");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_HOPDONGTHUE", Storage="_KHACHHANG", ThisKey="MaKH", OtherKey="MaKH", IsForeignKey=true)]
 		public KHACHHANG KHACHHANG
 		{
@@ -1403,6 +884,40 @@ namespace WebServicesQLTXM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGTHUE", Storage="_CHITIETXE", ThisKey="MaXe", OtherKey="MaXE", IsForeignKey=true)]
+		public CHITIETXE CHITIETXE
+		{
+			get
+			{
+				return this._CHITIETXE.Entity;
+			}
+			set
+			{
+				CHITIETXE previousValue = this._CHITIETXE.Entity;
+				if (((previousValue != value) 
+							|| (this._CHITIETXE.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CHITIETXE.Entity = null;
+						previousValue.HOPDONGTHUEs.Remove(this);
+					}
+					this._CHITIETXE.Entity = value;
+					if ((value != null))
+					{
+						value.HOPDONGTHUEs.Add(this);
+						this._MaXe = value.MaXE;
+					}
+					else
+					{
+						this._MaXe = default(int);
+					}
+					this.SendPropertyChanged("CHITIETXE");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1446,13 +961,13 @@ namespace WebServicesQLTXM
 		
 		private string _DienThoai;
 		
-		private EntitySet<CHITIETXE> _CHITIETXEs;
-		
 		private EntitySet<HOPDONGDATTRUOC> _HOPDONGDATTRUOCs;
 		
 		private EntitySet<HOPDONGTHUE> _HOPDONGTHUEs;
 		
 		private EntitySet<User_User> _User_Users;
+		
+		private EntitySet<CHITIETXE> _CHITIETXEs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1478,10 +993,10 @@ namespace WebServicesQLTXM
 		
 		public KHACHHANG()
 		{
-			this._CHITIETXEs = new EntitySet<CHITIETXE>(new Action<CHITIETXE>(this.attach_CHITIETXEs), new Action<CHITIETXE>(this.detach_CHITIETXEs));
 			this._HOPDONGDATTRUOCs = new EntitySet<HOPDONGDATTRUOC>(new Action<HOPDONGDATTRUOC>(this.attach_HOPDONGDATTRUOCs), new Action<HOPDONGDATTRUOC>(this.detach_HOPDONGDATTRUOCs));
 			this._HOPDONGTHUEs = new EntitySet<HOPDONGTHUE>(new Action<HOPDONGTHUE>(this.attach_HOPDONGTHUEs), new Action<HOPDONGTHUE>(this.detach_HOPDONGTHUEs));
 			this._User_Users = new EntitySet<User_User>(new Action<User_User>(this.attach_User_Users), new Action<User_User>(this.detach_User_Users));
+			this._CHITIETXEs = new EntitySet<CHITIETXE>(new Action<CHITIETXE>(this.attach_CHITIETXEs), new Action<CHITIETXE>(this.detach_CHITIETXEs));
 			OnCreated();
 		}
 		
@@ -1645,19 +1160,6 @@ namespace WebServicesQLTXM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_CHITIETXE", Storage="_CHITIETXEs", ThisKey="MaKH", OtherKey="MaKH")]
-		internal EntitySet<CHITIETXE> CHITIETXEs
-		{
-			get
-			{
-				return this._CHITIETXEs;
-			}
-			set
-			{
-				this._CHITIETXEs.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_HOPDONGDATTRUOC", Storage="_HOPDONGDATTRUOCs", ThisKey="MaKH", OtherKey="MaKH")]
 		internal EntitySet<HOPDONGDATTRUOC> HOPDONGDATTRUOCs
 		{
@@ -1697,6 +1199,19 @@ namespace WebServicesQLTXM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_CHITIETXE", Storage="_CHITIETXEs", ThisKey="MaKH", OtherKey="MaKH")]
+		internal EntitySet<CHITIETXE> CHITIETXEs
+		{
+			get
+			{
+				return this._CHITIETXEs;
+			}
+			set
+			{
+				this._CHITIETXEs.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1715,18 +1230,6 @@ namespace WebServicesQLTXM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_CHITIETXEs(CHITIETXE entity)
-		{
-			this.SendPropertyChanging();
-			entity.KHACHHANG = this;
-		}
-		
-		private void detach_CHITIETXEs(CHITIETXE entity)
-		{
-			this.SendPropertyChanging();
-			entity.KHACHHANG = null;
 		}
 		
 		private void attach_HOPDONGDATTRUOCs(HOPDONGDATTRUOC entity)
@@ -1760,6 +1263,18 @@ namespace WebServicesQLTXM
 		}
 		
 		private void detach_User_Users(User_User entity)
+		{
+			this.SendPropertyChanging();
+			entity.KHACHHANG = null;
+		}
+		
+		private void attach_CHITIETXEs(CHITIETXE entity)
+		{
+			this.SendPropertyChanging();
+			entity.KHACHHANG = this;
+		}
+		
+		private void detach_CHITIETXEs(CHITIETXE entity)
 		{
 			this.SendPropertyChanging();
 			entity.KHACHHANG = null;
@@ -2685,9 +2200,9 @@ namespace WebServicesQLTXM
 		
 		private int _IdAnh;
 		
-		private EntityRef<CHITIETXE> _CHITIETXE;
-		
 		private EntityRef<HINHANH> _HINHANH;
+		
+		private EntityRef<CHITIETXE> _CHITIETXE;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2701,8 +2216,8 @@ namespace WebServicesQLTXM
 		
 		public XE_ANH()
 		{
-			this._CHITIETXE = default(EntityRef<CHITIETXE>);
 			this._HINHANH = default(EntityRef<HINHANH>);
+			this._CHITIETXE = default(EntityRef<CHITIETXE>);
 			OnCreated();
 		}
 		
@@ -2754,40 +2269,6 @@ namespace WebServicesQLTXM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_XE_ANH", Storage="_CHITIETXE", ThisKey="MaXe", OtherKey="MaXE", IsForeignKey=true)]
-		public CHITIETXE CHITIETXE
-		{
-			get
-			{
-				return this._CHITIETXE.Entity;
-			}
-			set
-			{
-				CHITIETXE previousValue = this._CHITIETXE.Entity;
-				if (((previousValue != value) 
-							|| (this._CHITIETXE.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CHITIETXE.Entity = null;
-						previousValue.XE_ANHs.Remove(this);
-					}
-					this._CHITIETXE.Entity = value;
-					if ((value != null))
-					{
-						value.XE_ANHs.Add(this);
-						this._MaXe = value.MaXE;
-					}
-					else
-					{
-						this._MaXe = default(int);
-					}
-					this.SendPropertyChanged("CHITIETXE");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="HINHANH_XE_ANH", Storage="_HINHANH", ThisKey="IdAnh", OtherKey="Id", IsForeignKey=true)]
 		public HINHANH HINHANH
 		{
@@ -2822,6 +2303,40 @@ namespace WebServicesQLTXM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_XE_ANH", Storage="_CHITIETXE", ThisKey="MaXe", OtherKey="MaXE", IsForeignKey=true)]
+		public CHITIETXE CHITIETXE
+		{
+			get
+			{
+				return this._CHITIETXE.Entity;
+			}
+			set
+			{
+				CHITIETXE previousValue = this._CHITIETXE.Entity;
+				if (((previousValue != value) 
+							|| (this._CHITIETXE.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CHITIETXE.Entity = null;
+						previousValue.XE_ANHs.Remove(this);
+					}
+					this._CHITIETXE.Entity = value;
+					if ((value != null))
+					{
+						value.XE_ANHs.Add(this);
+						this._MaXe = value.MaXE;
+					}
+					else
+					{
+						this._MaXe = default(int);
+					}
+					this.SendPropertyChanged("CHITIETXE");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2840,6 +2355,515 @@ namespace WebServicesQLTXM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CHITIETXE")]
+	public partial class CHITIETXE : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _MaXE;
+		
+		private string _TenXE;
+		
+		private string _BangSo;
+		
+		private string _TrangThai;
+		
+		private string _MauSac;
+		
+		private int _DonGia;
+		
+		private int _MaNCC;
+		
+		private int _MaLX;
+		
+		private System.Nullable<int> _MaKH;
+		
+		private System.Nullable<int> _MucGiamGia;
+		
+		private string _Mota;
+		
+		private EntitySet<HOPDONGDATTRUOC> _HOPDONGDATTRUOCs;
+		
+		private EntitySet<HOPDONGTHUE> _HOPDONGTHUEs;
+		
+		private EntitySet<XE_ANH> _XE_ANHs;
+		
+		private EntityRef<KHACHHANG> _KHACHHANG;
+		
+		private EntityRef<LOAIXE> _LOAIXE;
+		
+		private EntityRef<NHACUNGCAP> _NHACUNGCAP;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMaXEChanging(int value);
+    partial void OnMaXEChanged();
+    partial void OnTenXEChanging(string value);
+    partial void OnTenXEChanged();
+    partial void OnBangSoChanging(string value);
+    partial void OnBangSoChanged();
+    partial void OnTrangThaiChanging(string value);
+    partial void OnTrangThaiChanged();
+    partial void OnMauSacChanging(string value);
+    partial void OnMauSacChanged();
+    partial void OnDonGiaChanging(int value);
+    partial void OnDonGiaChanged();
+    partial void OnMaNCCChanging(int value);
+    partial void OnMaNCCChanged();
+    partial void OnMaLXChanging(int value);
+    partial void OnMaLXChanged();
+    partial void OnMaKHChanging(System.Nullable<int> value);
+    partial void OnMaKHChanged();
+    partial void OnMucGiamGiaChanging(System.Nullable<int> value);
+    partial void OnMucGiamGiaChanged();
+    partial void OnMotaChanging(string value);
+    partial void OnMotaChanged();
+    #endregion
+		
+		public CHITIETXE()
+		{
+			this._HOPDONGDATTRUOCs = new EntitySet<HOPDONGDATTRUOC>(new Action<HOPDONGDATTRUOC>(this.attach_HOPDONGDATTRUOCs), new Action<HOPDONGDATTRUOC>(this.detach_HOPDONGDATTRUOCs));
+			this._HOPDONGTHUEs = new EntitySet<HOPDONGTHUE>(new Action<HOPDONGTHUE>(this.attach_HOPDONGTHUEs), new Action<HOPDONGTHUE>(this.detach_HOPDONGTHUEs));
+			this._XE_ANHs = new EntitySet<XE_ANH>(new Action<XE_ANH>(this.attach_XE_ANHs), new Action<XE_ANH>(this.detach_XE_ANHs));
+			this._KHACHHANG = default(EntityRef<KHACHHANG>);
+			this._LOAIXE = default(EntityRef<LOAIXE>);
+			this._NHACUNGCAP = default(EntityRef<NHACUNGCAP>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaXE", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MaXE
+		{
+			get
+			{
+				return this._MaXE;
+			}
+			set
+			{
+				if ((this._MaXE != value))
+				{
+					this.OnMaXEChanging(value);
+					this.SendPropertyChanging();
+					this._MaXE = value;
+					this.SendPropertyChanged("MaXE");
+					this.OnMaXEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenXE", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TenXE
+		{
+			get
+			{
+				return this._TenXE;
+			}
+			set
+			{
+				if ((this._TenXE != value))
+				{
+					this.OnTenXEChanging(value);
+					this.SendPropertyChanging();
+					this._TenXE = value;
+					this.SendPropertyChanged("TenXE");
+					this.OnTenXEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BangSo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string BangSo
+		{
+			get
+			{
+				return this._BangSo;
+			}
+			set
+			{
+				if ((this._BangSo != value))
+				{
+					this.OnBangSoChanging(value);
+					this.SendPropertyChanging();
+					this._BangSo = value;
+					this.SendPropertyChanged("BangSo");
+					this.OnBangSoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string TrangThai
+		{
+			get
+			{
+				return this._TrangThai;
+			}
+			set
+			{
+				if ((this._TrangThai != value))
+				{
+					this.OnTrangThaiChanging(value);
+					this.SendPropertyChanging();
+					this._TrangThai = value;
+					this.SendPropertyChanged("TrangThai");
+					this.OnTrangThaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string MauSac
+		{
+			get
+			{
+				return this._MauSac;
+			}
+			set
+			{
+				if ((this._MauSac != value))
+				{
+					this.OnMauSacChanging(value);
+					this.SendPropertyChanging();
+					this._MauSac = value;
+					this.SendPropertyChanged("MauSac");
+					this.OnMauSacChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DonGia", DbType="Int NOT NULL")]
+		public int DonGia
+		{
+			get
+			{
+				return this._DonGia;
+			}
+			set
+			{
+				if ((this._DonGia != value))
+				{
+					this.OnDonGiaChanging(value);
+					this.SendPropertyChanging();
+					this._DonGia = value;
+					this.SendPropertyChanged("DonGia");
+					this.OnDonGiaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaNCC", DbType="Int NOT NULL")]
+		public int MaNCC
+		{
+			get
+			{
+				return this._MaNCC;
+			}
+			set
+			{
+				if ((this._MaNCC != value))
+				{
+					if (this._NHACUNGCAP.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaNCCChanging(value);
+					this.SendPropertyChanging();
+					this._MaNCC = value;
+					this.SendPropertyChanged("MaNCC");
+					this.OnMaNCCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaLX", DbType="Int NOT NULL")]
+		public int MaLX
+		{
+			get
+			{
+				return this._MaLX;
+			}
+			set
+			{
+				if ((this._MaLX != value))
+				{
+					if (this._LOAIXE.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaLXChanging(value);
+					this.SendPropertyChanging();
+					this._MaLX = value;
+					this.SendPropertyChanged("MaLX");
+					this.OnMaLXChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaKH", DbType="Int")]
+		public System.Nullable<int> MaKH
+		{
+			get
+			{
+				return this._MaKH;
+			}
+			set
+			{
+				if ((this._MaKH != value))
+				{
+					if (this._KHACHHANG.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaKHChanging(value);
+					this.SendPropertyChanging();
+					this._MaKH = value;
+					this.SendPropertyChanged("MaKH");
+					this.OnMaKHChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MucGiamGia", DbType="Int")]
+		public System.Nullable<int> MucGiamGia
+		{
+			get
+			{
+				return this._MucGiamGia;
+			}
+			set
+			{
+				if ((this._MucGiamGia != value))
+				{
+					this.OnMucGiamGiaChanging(value);
+					this.SendPropertyChanging();
+					this._MucGiamGia = value;
+					this.SendPropertyChanged("MucGiamGia");
+					this.OnMucGiamGiaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mota", DbType="NVarChar(MAX)")]
+		public string Mota
+		{
+			get
+			{
+				return this._Mota;
+			}
+			set
+			{
+				if ((this._Mota != value))
+				{
+					this.OnMotaChanging(value);
+					this.SendPropertyChanging();
+					this._Mota = value;
+					this.SendPropertyChanged("Mota");
+					this.OnMotaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGDATTRUOC", Storage="_HOPDONGDATTRUOCs", ThisKey="MaXE", OtherKey="MaXe")]
+		internal EntitySet<HOPDONGDATTRUOC> HOPDONGDATTRUOCs
+		{
+			get
+			{
+				return this._HOPDONGDATTRUOCs;
+			}
+			set
+			{
+				this._HOPDONGDATTRUOCs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_HOPDONGTHUE", Storage="_HOPDONGTHUEs", ThisKey="MaXE", OtherKey="MaXe")]
+		internal EntitySet<HOPDONGTHUE> HOPDONGTHUEs
+		{
+			get
+			{
+				return this._HOPDONGTHUEs;
+			}
+			set
+			{
+				this._HOPDONGTHUEs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CHITIETXE_XE_ANH", Storage="_XE_ANHs", ThisKey="MaXE", OtherKey="MaXe")]
+		internal EntitySet<XE_ANH> XE_ANHs
+		{
+			get
+			{
+				return this._XE_ANHs;
+			}
+			set
+			{
+				this._XE_ANHs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KHACHHANG_CHITIETXE", Storage="_KHACHHANG", ThisKey="MaKH", OtherKey="MaKH", IsForeignKey=true)]
+		public KHACHHANG KHACHHANG
+		{
+			get
+			{
+				return this._KHACHHANG.Entity;
+			}
+			set
+			{
+				KHACHHANG previousValue = this._KHACHHANG.Entity;
+				if (((previousValue != value) 
+							|| (this._KHACHHANG.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._KHACHHANG.Entity = null;
+						previousValue.CHITIETXEs.Remove(this);
+					}
+					this._KHACHHANG.Entity = value;
+					if ((value != null))
+					{
+						value.CHITIETXEs.Add(this);
+						this._MaKH = value.MaKH;
+					}
+					else
+					{
+						this._MaKH = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("KHACHHANG");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LOAIXE_CHITIETXE", Storage="_LOAIXE", ThisKey="MaLX", OtherKey="MaLoai", IsForeignKey=true)]
+		public LOAIXE LOAIXE
+		{
+			get
+			{
+				return this._LOAIXE.Entity;
+			}
+			set
+			{
+				LOAIXE previousValue = this._LOAIXE.Entity;
+				if (((previousValue != value) 
+							|| (this._LOAIXE.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LOAIXE.Entity = null;
+						previousValue.CHITIETXEs.Remove(this);
+					}
+					this._LOAIXE.Entity = value;
+					if ((value != null))
+					{
+						value.CHITIETXEs.Add(this);
+						this._MaLX = value.MaLoai;
+					}
+					else
+					{
+						this._MaLX = default(int);
+					}
+					this.SendPropertyChanged("LOAIXE");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NHACUNGCAP_CHITIETXE", Storage="_NHACUNGCAP", ThisKey="MaNCC", OtherKey="MaNCC", IsForeignKey=true)]
+		public NHACUNGCAP NHACUNGCAP
+		{
+			get
+			{
+				return this._NHACUNGCAP.Entity;
+			}
+			set
+			{
+				NHACUNGCAP previousValue = this._NHACUNGCAP.Entity;
+				if (((previousValue != value) 
+							|| (this._NHACUNGCAP.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._NHACUNGCAP.Entity = null;
+						previousValue.CHITIETXEs.Remove(this);
+					}
+					this._NHACUNGCAP.Entity = value;
+					if ((value != null))
+					{
+						value.CHITIETXEs.Add(this);
+						this._MaNCC = value.MaNCC;
+					}
+					else
+					{
+						this._MaNCC = default(int);
+					}
+					this.SendPropertyChanged("NHACUNGCAP");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_HOPDONGDATTRUOCs(HOPDONGDATTRUOC entity)
+		{
+			this.SendPropertyChanging();
+			entity.CHITIETXE = this;
+		}
+		
+		private void detach_HOPDONGDATTRUOCs(HOPDONGDATTRUOC entity)
+		{
+			this.SendPropertyChanging();
+			entity.CHITIETXE = null;
+		}
+		
+		private void attach_HOPDONGTHUEs(HOPDONGTHUE entity)
+		{
+			this.SendPropertyChanging();
+			entity.CHITIETXE = this;
+		}
+		
+		private void detach_HOPDONGTHUEs(HOPDONGTHUE entity)
+		{
+			this.SendPropertyChanging();
+			entity.CHITIETXE = null;
+		}
+		
+		private void attach_XE_ANHs(XE_ANH entity)
+		{
+			this.SendPropertyChanging();
+			entity.CHITIETXE = this;
+		}
+		
+		private void detach_XE_ANHs(XE_ANH entity)
+		{
+			this.SendPropertyChanging();
+			entity.CHITIETXE = null;
 		}
 	}
 }
