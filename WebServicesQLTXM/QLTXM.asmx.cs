@@ -127,7 +127,7 @@ namespace WebServicesQLTXM
             var query = from x in db.CHITIETXEs
                         select new CHITIETXE2
                         {
-                            TenBangSo = x.TenXE + " có biển số " + x.BangSo,
+                            TenBangSo = x.TenXE + " có biển số " + x.BangSo +" có màu "+x.MauSac,
                             MaXe = x.MaXE
                         };
             return query.ToList();
@@ -322,6 +322,77 @@ namespace WebServicesQLTXM
         {
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(pass.Trim(), "SHA1");
         }
+        ///// giao diện chính
+        ///Trang home
+        /// show xe tay ga
+        [WebMethod]
+        public List<XE_ANH1> ShowTayga()
+        {
+            var query = from a in db.XE_ANHs
+                        where a.CHITIETXE.LOAIXE.TenLoai == "Tay Ga"
+                        select new XE_ANH1
+                        {
+                            Id = a.HINHANH.Id,
+                            Name = a.HINHANH.Name,
+                            Link = a.HINHANH.Link,
+                            GiaThue= a.CHITIETXE.DonGia,
+                            MucGiam = a.CHITIETXE.MucGiamGia,
+                            BangSo= a.CHITIETXE.BangSo,
+                            LoaiXe=a.CHITIETXE.LOAIXE.TenLoai,
+                            HangXe=a.CHITIETXE.NHACUNGCAP.TenNCC
+                        };
+            return query.Take(1).ToList();
+        }
+        /// show xe tay ga
+        [WebMethod]
+        public List<XE_ANH1> ShowConTay()
+        {
+            var query = from a in db.XE_ANHs
+                        where a.CHITIETXE.LOAIXE.TenLoai == "Côn Tay"
+                        select new XE_ANH1
+                        {
+                            Id = a.HINHANH.Id,
+                            Name = a.HINHANH.Name,
+                            Link = a.HINHANH.Link,
+                            GiaThue = a.CHITIETXE.DonGia,
+                            MucGiam = a.CHITIETXE.MucGiamGia,
+                            BangSo = a.CHITIETXE.BangSo,
+                            LoaiXe = a.CHITIETXE.LOAIXE.TenLoai,
+                            HangXe = a.CHITIETXE.NHACUNGCAP.TenNCC
+                        };
+            return query.Take(1).ToList();
+        }
+        /// show xe tay ga
+        [WebMethod]
+        public List<XE_ANH1> ShowXeSo()
+        {
+            var query = from a in db.XE_ANHs
+                        where a.CHITIETXE.LOAIXE.TenLoai == "Xe So"
+                        select new XE_ANH1
+                        {
+                            Id = a.HINHANH.Id,
+                            Name = a.HINHANH.Name,
+                            Link = a.HINHANH.Link,
+                            GiaThue = a.CHITIETXE.DonGia,
+                            MucGiam = a.CHITIETXE.MucGiamGia,
+                            BangSo = a.CHITIETXE.BangSo,
+                            LoaiXe = a.CHITIETXE.LOAIXE.TenLoai,
+                            HangXe = a.CHITIETXE.NHACUNGCAP.TenNCC
+                        };
+            return query.Take(1).ToList();
+        }
+    }
+
+    public class XE_ANH1
+    {
+        public int Id { get;  set; }
+        public string Link { get;  set; }
+        public string Name { get;  set; }
+        public int GiaThue { get;  set; }
+        public int? MucGiam { get;  set; }
+        public string BangSo { get;  set; }
+        public string LoaiXe { get;  set; }
+        public string HangXe { get;  set; }
     }
 
     public class CHITIETXE2

@@ -68,3 +68,4 @@ D:\hockicuoi2018\baocao2\WebServicesQLTXM\obj\Debug\WebServicesQLTXM.csproj.Core
 D:\hockicuoi2018\baocao2\WebServicesQLTXM\obj\Debug\WebServicesQLTXM.csproj.CopyComplete
 D:\hockicuoi2018\baocao2\WebServicesQLTXM\obj\Debug\WebServicesQLTXM.dll
 D:\hockicuoi2018\baocao2\WebServicesQLTXM\obj\Debug\WebServicesQLTXM.pdb
+D:\hockicuoi2018\baocao2\WebServicesQLTXM\obj\Debug\WebServicesQLTXM.csprojAssemblyReference.cache
