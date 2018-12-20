@@ -19,7 +19,85 @@ namespace WebServicesQLTXM
     {
 
         QLTXMDataContext db = new QLTXMDataContext();
-        // Đăng nhập
+        //đếm xe có lượt thuê cao
+        [WebMethod]
+        public List<HOPDONGTHUE1> DemLuot(int ngaythue)
+        {
+            
+            var query = from h in db.HOPDONGTHUEs
+                        where h.NgayThue.Month == ngaythue
+                        group h by h.CHITIETXE.BangSo into g
+                        select new HOPDONGTHUE1
+                        {
+                            Xe = g.Key,
+                            SoLuot = g.Count()
+                        };
+            return query.ToList();
+        }
+        //
+        [WebMethod]
+        public List<THANHTOAN> ThongKeTienTam(int thang)
+        {
+            var query = (from x in db.HOPDONGTHUEs
+                        where x.TrangThai == "Đã thanh toán" && x.NgayThue.Month == thang
+                        select new THANHTOAN
+                        {
+                            SoDDT = x.SoDDT,
+                            BangSo = x.CHITIETXE.BangSo,
+                            HoTenKH = x.KHACHHANG.HoTen,
+                            HoTenNV = x.NHANVIEN.HoTen,
+                            GiaThueNgay = x.CHITIETXE.DonGia,
+                            NgayThue = x.NgayThue,
+                            NgayTra = x.NgayTra,
+                            SoNgay = (x.NgayTra.Day - x.NgayThue.Day),
+                            ThanhTien = ((x.NgayTra.Day - x.NgayThue.Day) * x.CHITIETXE.DonGia) - (x.CHITIETXE.DonGia * x.CHITIETXE.MucGiamGia) / 100
+                        }).GroupBy(y=>y.BangSo).Select(g=>new THANHTOAN {BangSo = g.Key, ThanhTien = g.Sum(t=>t.ThanhTien)}).ToList();
+            
+            return query;
+
+        }
+        //
+       
+      
+        [WebMethod]
+        public string checkUser(string mail)
+        {
+            var l = db.User_Users.Where(u => u.Email == mail).Select(x => x.IdRole).First();
+            var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
+            var n = db.User_Users.Where(u => u.Email == mail).Select(x => x.UserName).First();
+            return j.ToString();
+          
+        }
+        //
+        [WebMethod]
+        public string checknameGG(string mail)
+        {
+            var l = db.User_Users.Where(u => u.Email == mail).Select(x => x.IdRole).First();
+            var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
+            var n = db.User_Users.Where(u => u.Email == mail).Select(x => x.UserName).First();
+            return n.ToString();
+
+        }
+        [WebMethod]
+        public string checknameTT(string username)
+        {
+            var l = db.User_Users.Where(u => u.UserName == username).Select(x => x.IdRole).First();
+            var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
+            var n = db.User_Users.Where(u => u.UserName == username).Select(x => x.UserName).First();
+
+            return n.ToString();
+
+        }
+        [WebMethod]
+        public string checkAdmin(string username)
+        {
+            var l = db.User_Users.Where(u => u.UserName == username).Select(x => x.IdRole).First();
+            var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
+            var n = db.User_Users.Where(u => u.UserName == username).Select(x => x.UserName).First();
+            
+            return j.ToString();
+
+        }
         [WebMethod]
         public void DangNhapGG(string mail)
         {
@@ -35,22 +113,11 @@ namespace WebServicesQLTXM
         {
             if (db.User_Users.Where(x => name == x.UserName && x.Password == mahoa(pass)).First() != null)
             {
-                var l = db.User_Users.Where(u => u.UserName == name).Select(x => x.IdRole).First();
-                var j = db.USer_Roles.Where(rl => rl.Id == int.Parse(l.ToString())).Select(rl => rl.RoleName).First();
-                var n = db.User_Users.Where(u => u.UserName == name).Select(x => x.UserName).First();
-                Session["name"] = n;
-                Session["role"] = j;
-                if ((string)Session["role"] == "Admin")
-                {
+                
                     return true;
-                }
-                else
-                {
+               
 
-                    return false;
-                }
-
-                return true;
+               
             }
             else
             {
@@ -78,10 +145,10 @@ namespace WebServicesQLTXM
         Random ran = new Random();
         // Đăng kí thông thường
         [WebMethod]
-        public void DangKiTT(string name, string mail, string password, string id)
+        public void DangKiTT(string name, string mail, string password)
         {
             User_User u = new User_User();
-            u.Id = id;
+            u.Id = u.Id = ran.Next(999999999).ToString(); 
             u.UserName = name;
             u.Email = mail;
             u.Password = mahoa(password);
@@ -94,7 +161,7 @@ namespace WebServicesQLTXM
         [WebMethod]
         public List<CHITIETXE> DanhSachXe()
         {
-            return db.CHITIETXEs.OrderByDescending(x => x.MaXE).Where(y=>y.TrangThai=="Trống").ToList();
+            return db.CHITIETXEs.OrderByDescending(x => x.MaXE).Where(y=>y.TrangThai=="Trống" || y.TrangThai == "Đang đặt").ToList();
         }
         // Nhân Viên
         [WebMethod]
@@ -104,9 +171,15 @@ namespace WebServicesQLTXM
         }
         // Khách hàng 
         [WebMethod]
-        public List<KHACHHANG> DanhSachKhachHang()
+        public List<KHACHHANG1> DanhSachKhachHang()
         {
-            return db.KHACHHANGs.OrderByDescending(x=>x.MaKH).ToList();
+            var query = (from x in db.KHACHHANGs
+                        select new KHACHHANG1
+                        {
+                            TenKH = x.HoTen + " có SĐT " + x.DienThoai + " ở " + x.DiaChi,
+                            MaKH = x.MaKH
+                        }).ToList();
+            return query;
         }
         // Loại xe
         [WebMethod]
@@ -163,16 +236,32 @@ namespace WebServicesQLTXM
         // Xử lí đặt xe
         // Thêm đơn đặt xe
         [WebMethod]
-        public void ThemDatXe(int maxe, DateTime ngaydat, string trangthai, int makh)
+        public void ThemDatXe(int maxe, DateTime ngaydat, string tenkh, string gioitinh, string namsinh, string diachi,  string cmnd, string mail, string dt)
         {
-            HOPDONGDATTRUOC h = new HOPDONGDATTRUOC();
+           
+            KHACHHANG k = new KHACHHANG();
+           
+           
+            k.HoTen = tenkh;
+            k.NamSinh = namsinh;
+            k.CMND = cmnd;
+            k.GioiTinh = gioitinh;
+            k.Email = mail;
+            k.DiaChi = diachi;
+            k.DienThoai = dt;
+            db.KHACHHANGs.InsertOnSubmit(k);
+            db.SubmitChanges();
             CHITIETXE x = db.CHITIETXEs.Where(y => y.MaXE == maxe).FirstOrDefault();
+            HOPDONGDATTRUOC h = new HOPDONGDATTRUOC();
             x.TrangThai = "Đang đặt";
             h.MaXe = maxe;
+            h.MaHDDT = ran.Next(999999);
+            int makh = k.MaKH;
             h.MaKH = makh;
             h.TrangThai = "Đang đặt";
             h.NgayDenThue = ngaydat;
             db.HOPDONGDATTRUOCs.InsertOnSubmit(h);
+          
             db.SubmitChanges();
         }
         // Hợp đồng đặt trước
@@ -235,7 +324,7 @@ namespace WebServicesQLTXM
         }
         // Sửa chi tiết xe
         [WebMethod]
-        public void XeChiTietXe(int maxe,string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string mausac)
+        public void XeChiTietXe(int maxe,string tenxe, string bienso, int mucgiamgia, int giathue, int malx, int mancc, string mausac, string trangthai)
         {
 
             CHITIETXE x = db.CHITIETXEs.Where(y => y.MaXE == maxe).FirstOrDefault();
@@ -245,7 +334,7 @@ namespace WebServicesQLTXM
             x.MaLX = malx;
             x.MaNCC = mancc;
             x.MucGiamGia = mucgiamgia;
-            x.TrangThai = "Trống";
+            x.TrangThai = trangthai;
             x.MauSac = mausac;
           
             db.SubmitChanges();
@@ -378,7 +467,7 @@ namespace WebServicesQLTXM
         [WebMethod]
         public List<CHITIETXE3> DanhSachTayGa()
         {
-            var query = from x in db.CHITIETXEs // ua bang chi tiet xe la bang xe ha uk som tui laasy bảng xe anh nó cũng bị dậy
+            var query = from x in db.CHITIETXEs 
                         where x.LOAIXE.TenLoai == "Tay Ga" && x.TrangThai == "Trống"
                         join a in db.XE_ANHs on x.MaXE equals a.MaXe
                         group x by x.MaXE into g
@@ -390,7 +479,7 @@ namespace WebServicesQLTXM
             List<CHITIETXE3> xeMoi = new List<CHITIETXE3>();
             foreach (var i in query)
             {
-                xeMoi = xeMoi.Concat(DanhSachTayGaTam(i.MaXe)).ToList();//CHo nay phai add Item vo dc la ngon r ,
+                xeMoi = xeMoi.Concat(DanhSachTayGaTam(i.MaXe)).ToList();
             }
             return xeMoi.ToList();
 
@@ -496,10 +585,12 @@ namespace WebServicesQLTXM
         }
         /// show in home
         ///  [WebMethod]
-        public List<CHITIETXE3> DanhSachTatCa()
+        public List<CHITIETXE3> DanhSachTatCaTam(int maXe)
         {
             var query = from x in db.CHITIETXEs
+                        where  x.MaXE == maXe
                         join a in db.XE_ANHs on x.MaXE equals a.MaXe
+
                         select new CHITIETXE3
                         {
                             MaXe = x.MaXE,
@@ -515,15 +606,137 @@ namespace WebServicesQLTXM
                             Name = a.HINHANH.Name,
                             Link = a.HINHANH.Link,
                         };
-            return query.ToList();
+
+
+
+            return query.Take(1).ToList();
 
         }
-       
+        // show tatca
+        [WebMethod]
+        public List<CHITIETXE3> DanhSachTatCa(string tenxe)
+        {
+            var query = (from x in db.CHITIETXEs
+                        where  x.TrangThai == "Trống"
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        group x by x.TenXE into g
+                        select new MoiNE
+                        {
+                            TenXe = g.Key,
+
+                        });
+            List<CHITIETXE3> xeMoi = new List<CHITIETXE3>();
+            foreach (var i in query)
+            {
+                xeMoi = xeMoi.Concat(DanhSachTatCaTam(i.MaXe)).ToList();
+            }
+            return xeMoi.Where(y => y.TenXe.Contains(tenxe)).ToList();
+
+        }
+        
+        //tim kiếm
+        [WebMethod]
+        public List<CHITIETXE3> TimKiem(int maXe, string tenxe)
+        {
+            var query = from x in db.CHITIETXEs
+                      
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        where x.TrangThai == "Trống" && a.HINHANH.Name.Contains(tenxe) && x.MaXE == maXe
+
+                        select new CHITIETXE3
+                        {
+                            MaXe = x.MaXE,
+                            TenXe = x.TenXE,
+                            GiaThue = x.DonGia,
+                            MucGiamGia = x.MucGiamGia,
+                            LoaiXe = x.LOAIXE.TenLoai,
+                            HangXe = x.NHACUNGCAP.TenNCC,
+                            BangSo = x.BangSo,
+                            MauSac = x.MauSac,
+                            TrangThai = x.TrangThai,
+                            Id = a.HINHANH.Id,
+                            Name = a.HINHANH.Name,
+                            Link = a.HINHANH.Link,
+                        };
+            return query.Take(1).ToList();
+
+        }
+        //tim kiếm
+        [WebMethod]
+        public List<CHITIETXE3> TimKiem2(string tenxe)
+        {
+            var query = from x in db.CHITIETXEs
+
+                        join a in db.XE_ANHs on x.MaXE equals a.MaXe
+                        where x.TrangThai == "Trống" && a.HINHANH.Name.Contains(tenxe)
+                        group x by x.MaXE into g
+                        select new MoiNE
+                        {
+                            MaXe = g.Key,
+                            
+                        };
+            List<CHITIETXE3> xeMoi = new List<CHITIETXE3>();
+            foreach(var i in query)
+            {
+                xeMoi = xeMoi.Concat(TimKiem(i.MaXe, tenxe)).ToList();
+            }
+            return xeMoi;
+
+        }
+        // Thêm khách hàng
+        [WebMethod]
+        public List<HOPDONGDATTRUOC1> DanhSachDat(int maxe)
+        {
+            var query = from d in db.HOPDONGDATTRUOCs
+                        where d.MaXe == maxe
+                        select new HOPDONGDATTRUOC1
+                        {
+                            SoDD = d.MaHDDT,
+                            HoTenKH = d.KHACHHANG.HoTen,
+                            NgayDat = d.NgayDenThue,
+                            
+                        };
+            return query.ToList();
+        }
+        // Sưa thông tin xe
+        [WebMethod]
+        public void SuaChiTietXe()
+        {
+
+        }
+
+    }
+
+    public class MoiNE1
+    {
+        public string MaXe { get; set; }
+        public DateTime NgayThue { get; set; }
+        public string BangSo { get;  set; }
+    }
+
+    public class HOPDONGTHUE1
+    {
+        public string Xe { get;  set; }
+        public int SoLuot { get;  set; }
+    }
+
+    public class HOPDONGDATTRUOC1
+    {
+        public int SoDD { get; set; }
+        public string HoTenKH { get; set; }
+        public DateTime NgayDat { get; set; }
+    }
+
+    public class KHACHHANG1
+    {
+        public string TenKH { get; set; }
+        public int MaKH { get; set; }
     }
 
     public class MoiNE
     {
         public int MaXe { get; set; }
+        public string TenXe { get;  set; }
     }
 
     public class CHITIETXE3
@@ -579,7 +792,7 @@ namespace WebServicesQLTXM
         public int SoNgay { get;  set; }
         public DateTime? NgayThue { get;  set; }
         public double? ThanhTien { get;  set; }
-        
+        public string BangSo { get;  set; }
     }
 
     // class khởi tạo get dữ liệu
