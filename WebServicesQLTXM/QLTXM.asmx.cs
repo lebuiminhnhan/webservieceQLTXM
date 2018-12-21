@@ -266,9 +266,22 @@ namespace WebServicesQLTXM
         }
         // Hợp đồng đặt trước
         [WebMethod]
-        public List<HOPDONGDATTRUOC> DanhSachHopDongDatTruoc()
+        public List<HOPDONGDATTRUOC2> DanhSachHopDongDatTruoc()
         {
-            return db.HOPDONGDATTRUOCs.OrderByDescending(x => x.MaKH).ToList();
+            var query = from h in db.HOPDONGDATTRUOCs
+                        where h.TrangThai == "Đang đặt"
+                        select new HOPDONGDATTRUOC2
+                        {
+                            MaDD = h.MaHDDT,
+                            Xe = h.CHITIETXE.BangSo,
+                            TenKH = h.KHACHHANG.HoTen,
+                            DiaChi = h.KHACHHANG.DiaChi,
+                            SDT = h.KHACHHANG.DienThoai,
+                            NgayDat = h.NgayDenThue,
+                            TrangThai = h.TrangThai
+                        };
+            return query.ToList();
+
         }
         // Xử lí thuê xe
         // danh sách hợp đồng thuê xe
@@ -341,6 +354,15 @@ namespace WebServicesQLTXM
         }
         // cập nhật trạng thái xe
         [WebMethod]
+        public void CapNhatTrangThaiXeTrong(string bangsoxe)
+        {
+            CHITIETXE h = db.CHITIETXEs.Where(x => x.BangSo == bangsoxe).FirstOrDefault();
+            HOPDONGDATTRUOC d = db.HOPDONGDATTRUOCs.Where(x => x.CHITIETXE.BangSo == bangsoxe).FirstOrDefault();
+            h.TrangThai = "Trống";
+            d.TrangThai = "Đã hủy";
+            db.SubmitChanges();
+        }
+        [WebMethod]
         public void CapNhatTrangThaiXe(int maxe)
         {
             CHITIETXE h = db.CHITIETXEs.Where(x => x.MaXE == maxe).FirstOrDefault();
@@ -362,19 +384,38 @@ namespace WebServicesQLTXM
         {
             HOPDONGTHUE h = new HOPDONGTHUE();
             CHITIETXE x = db.CHITIETXEs.Where(y => y.MaXE == maxe).FirstOrDefault();
-         
-            h.TrangThai = "Đang thuê";
-            h.MaXe = maxe;
-            h.GiaThue = x.DonGia;
-            h.MucGiamGia = (int)x.MucGiamGia;
-            h.MaKH = makh;
-            h.MaNV = manv;
-            h.TrangThai = "Đang Thuê";
-            x.TrangThai = "Đang Thuê";
-            h.NgayThue = ngaythue;
-            h.NgayTra = ngaytra;
-            db.HOPDONGTHUEs.InsertOnSubmit(h);
-            db.SubmitChanges();
+            HOPDONGDATTRUOC d = db.HOPDONGDATTRUOCs.Where(c =>c.CHITIETXE.MaXE  == maxe).FirstOrDefault();
+            if(d==null)
+            {
+                h.MaXe = maxe;
+                h.GiaThue = x.DonGia;
+                h.MucGiamGia = (int)x.MucGiamGia;
+                h.MaKH = makh;
+                h.MaNV = manv;
+                h.TrangThai = "Đang Thuê";
+                x.TrangThai = "Đang Thuê";
+                h.NgayThue = ngaythue;
+                h.NgayTra = ngaytra;
+                db.HOPDONGTHUEs.InsertOnSubmit(h);
+                db.SubmitChanges();
+            }
+            else
+            {
+                d.TrangThai = "Đang thuê";
+                h.MaXe = maxe;
+                h.GiaThue = x.DonGia;
+                h.MucGiamGia = (int)x.MucGiamGia;
+                h.MaKH = makh;
+                h.MaNV = manv;
+                h.TrangThai = "Đang Thuê";
+                x.TrangThai = "Đang Thuê";
+                h.NgayThue = ngaythue;
+                h.NgayTra = ngaytra;
+                db.HOPDONGTHUEs.InsertOnSubmit(h);
+                db.SubmitChanges();
+            }
+           
+            
         }
         // xử lí trả xe
         // cập nhật  hợp đồng xe
@@ -705,6 +746,17 @@ namespace WebServicesQLTXM
 
         }
 
+    }
+
+    public class HOPDONGDATTRUOC2
+    {
+        public int MaDD { get; set; }
+        public string Xe { get; set; }
+        public string TenKH { get; set; }
+        public string DiaChi { get; set; }
+        public string SDT { get; set; }
+        public DateTime NgayDat { get; set; }
+        public string TrangThai { get; set; }
     }
 
     public class MoiNE1
