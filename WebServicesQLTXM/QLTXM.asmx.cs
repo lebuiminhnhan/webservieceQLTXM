@@ -416,9 +416,23 @@ namespace WebServicesQLTXM
         }
         // danh sách hợp đồng thuê xe
         [WebMethod]
-        public List<HOPDONGTHUE> DanhSachThueChuaThanhToan()
+        public List<HOPDONGTHUE2> DanhSachThueChuaThanhToan()
         {
-            return db.HOPDONGTHUEs.Where(x=>x.TrangThai=="Đang Thuê").OrderByDescending(x => x.MaKH).ToList();
+            var query = from h in db.HOPDONGTHUEs
+                        where h.TrangThai == "Đang thuê"
+                        select new HOPDONGTHUE2
+                        {
+                            SoDDT = h.SoDDT,
+                            Xe = h.CHITIETXE.BangSo,
+                            GiaThue = h.GiaThue,
+                            MucGiamGia = h.MucGiamGia,
+                            NgayThue = h.NgayThue,
+                            NgayTra = h.NgayTra,
+                            TenNV = h.NHANVIEN.HoTen,
+                            TeKH = h.KHACHHANG.HoTen,
+                            TrangThai = h.TrangThai
+                        };
+            return query.ToList();
         }
         // Danh sách xe chỉ hiển thị xe chưa thuê
         [WebMethod]
